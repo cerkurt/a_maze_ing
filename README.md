@@ -292,6 +292,7 @@ If `PERFECT=False` in the config:
 - This creates **multiple possible paths**
 
 This step does **not break connectivity** — it only adds choices.
+
 ---
 
 ## A.6. Coordinate System
