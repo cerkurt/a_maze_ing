@@ -237,7 +237,7 @@ DFS explores the maze by:
 - When moving to a neighbor, removing the wall between the two cells.
 - Reaches a cell with no unvisited neighbors, it **backtrack**s.
 
-Think of it as:
+We can think of it as:
 
 > Walk until stuck → step back → try a different direction
 
@@ -252,6 +252,10 @@ to avoid recursion depth limits and keep the logic easier to follow.
 In a perfect maze:
 
 - There is **exactly one path** between any two cells
+
+If PERFCT=False
+
+- There might be other ways to solve the maze, but BFS always calculates the shortest one.
 
 ---
 
@@ -307,7 +311,7 @@ maze.grid[y][x]
 
 ## A.7. 42 Marking Decoration (Conditional)
 
-If the maze is large enough both as size also the margin wise:
+If the maze is large enough:
 
 - A “42” pattern is **reserved in the center**
 - These cells are marked as **forbidden** for DFS and BFS search
