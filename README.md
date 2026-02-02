@@ -563,7 +563,7 @@ No code was copied blindly.
 ### B.1.1. Clone the repository
 
 ```bash
-git clone <repo_url>
+git clone https://github.com/cerkurt/a_maze_ing a_maze_ing
 cd a-maze-ing
 ```
 
