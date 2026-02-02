@@ -633,4 +633,4 @@ If you are new to:
 - graph traversal
 - grid-based algorithms
 
-You are at the a_maze_ing spot! 🧠✨
+You are at the a_maze_ing spot! :)
