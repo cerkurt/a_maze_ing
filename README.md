@@ -565,7 +565,7 @@ No code was copied blindly.
 
 ## B.1. How to Run
 
-### B.1.1. Clone the repository
+### B.1.1. Clone the repository with a folder name a_maze_ing
 
 ```bash
 git clone https://github.com/cerkurt/a_maze_ing a_maze_ing
@@ -590,7 +590,7 @@ WIDTH=20
 HEIGHT=10
 ENTRY=0,0
 EXIT=19,9
-PERFECT=False
+PERFECT=True
 SEED=42
 ```
 
