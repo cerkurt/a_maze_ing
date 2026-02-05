@@ -1,25 +1,33 @@
 PY  := python3
+PIP := $(PY) -m pip
 CFG ?= config.txt
 OUT ?= maze.txt
 
-.PHONY: help run ui output check imports clean distclean
+.PHONY: help install run debug ui output check imports clean distclean lint lint-strict
 
 help:
 	@echo ""
 	@echo "a-maze-ing Makefile"
 	@echo "------------------"
-	@echo "make run        Run program with CFG=$(CFG)"
-	@echo "make ui         Run interactive visualizer"
-	@echo "make output     Run and print output file ($(OUT))"
-	@echo "make check      Compile + import checks"
-	@echo "make clean      Remove __pycache__ and *.pyc"
-	@echo "make distclean  Clean + remove output file"
+	@echo "make install     Install project dependencies"
+	@echo "make run         Run program with CFG=$(CFG)"
+	@echo "make debug       Run program in pdb with CFG=$(CFG)"
+	@echo "make output      Run and print output file ($(OUT))"
+	@echo "make check       Compile + import checks"
+	@echo "make lint        flake8 + mypy"
+	@echo "make lint-strict flake8 + mypy --strict"
+	@echo "make clean       Remove caches/temp files"
+	@echo "make distclean   Clean + remove output file"
 	@echo ""
+
+install:
+	$(PIP) install -r requirements.txt
 
 run:
 	$(PY) a_maze_ing.py $(CFG)
 
-ui: run
+debug:
+	$(PY) -m pdb a_maze_ing.py $(CFG)
 
 output:
 	$(PY) a_maze_ing.py $(CFG)
@@ -38,9 +46,18 @@ imports:
 	$(PY) -c "from maze_files.wall_operations import carve_coordinate"
 	@echo "All imports OK"
 
+lint:
+	flake8 .
+	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+
+lint-strict:
+	flake8 .
+	mypy . --strict
+
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
+	rm -rf .mypy_cache .pytest_cache .ruff_cache .coverage htmlcov
 
 distclean: clean
 	rm -f $(OUT)
