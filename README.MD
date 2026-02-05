@@ -108,8 +108,7 @@ The maze project naturally breaks into two big concerns:
 1. Maze logic & algorithms
 2. Input/output, configuration, and display (UI)
 
-We used this natural separation to work in parallel without blocking each
-other.
+We used this natural separation to work in parallel without blocking each other.
 
 Person A — Maze Logic (Core Algorithms)
 Responsible for:
@@ -168,9 +167,9 @@ All user input for the CLI is provided through a simple configuration file
 (`config.txt`). Parsing and validation are handled by `config_parser.py`.
 
 This design ensures:
-- maze logic never deals with raw strings,
-- invalid inputs are rejected early,
-- the rest of the program works with **trusted, typed data**.
+- Maze logic never deals with raw strings,
+- Invalid inputs are rejected early,
+- The rest of the program works with **trusted, typed data**.
 
 
 The configuration file follows a strict `KEY=VALUE` format.
@@ -208,7 +207,7 @@ Parsing is performed in three clear phases:
    - Bounds checks are enforced:
      - `0 <= entry.x < width` and `0 <= entry.y < height`
      - same validation for `exit`
-   - Entry and exit must not be the same coordinate
+   - Entry and exit cannot be the same coordinates
 
 3. Configuration object creation
    - Once validated, values are stored in an immutable dataclass:
@@ -258,16 +257,16 @@ DFS explores the maze by:
 
 - Starting from the entry cell.
 - Randomly visiting unvisited neighboring cells.
-- When moving to a neighbor, removing the wall between the two cells.
-- Reaches a cell with no unvisited neighbors, it **backtrack**s.
+- When moving to a neighbor, remove the wall between the two cells.
+- Reaches a cell with no unvisited neighbors, it **backtracks**.
 
 Think of it as:
 
 > Walk until stuck → step back → try a different direction
 
 This process creates a **perfect maze**, meaning:
-- every cell is reachable,
-- there is exactly **one unique path** between any two cells.
+- Every cell is reachable,
+- There is exactly **one unique path** between any two cells.
 
 The DFS is implemented using an **explicit stack** instead of recursion,
 to avoid recursion depth limits and keep the logic easier to follow.
@@ -307,7 +306,7 @@ NNEESWSS
 
 If `PERFECT=False` in the config:
 
-- the maze is first generated as perfect (DFS)
+- The maze is first generated as perfect (DFS)
 - then **extra walls are opened**
 - this creates **multiple possible paths**
 
@@ -332,7 +331,7 @@ maze.grid[y][x]
 
 ## A.8. 42 Marking Decoration (Conditional)
 
-If the maze is large enough both as size also the margin wise:
+If the maze is large enough:
 
 - A “42” pattern is **reserved in the center**
 - These cells are marked as **forbidden** for DFS and BFS search
@@ -455,8 +454,7 @@ All of that becomes possible without rewriting DFS or BFS.
 
 ### A.9.5. Takeaway
 
-Dictionaries turn repeated logic into data. Instead of repeating code,
-we let the data describe:
+Dictionaries turn repeated logic into data. Instead of repeating code, we let the data describe:
 
 	•	how to move
 	•	how to check walls
@@ -498,8 +496,8 @@ AI tools were used during this project as a **learning aid**, not as a code
 generator.
 
 AI assistance was used to:
-- clarify algorithm concepts when speficic questions were not answered by the
-other recources on the internet.
+- clarify algorithm concepts when specific questions were not answered by the
+other resources on the internet.
 - discuss design decisions and architecture,
 - review logic and reasoning at the end of each working phase,
 - improve documentation clarity.
@@ -518,7 +516,7 @@ No code was copied blindly.
 ### B.1.1. Clone the repository
 
 ```bash
-git clone git@vogsphere-v2.codam.nl:vogsphere/intra-uuid-49c3cac2-0f24-4a32-9b53-984f479338af-7158877-cerkurt a_maze_ing
+git clone https://github.com/cerkurt/a_maze_ing/
 cd a_maze_ing
 ```
 
@@ -612,7 +610,7 @@ python3 -c "from mazegen import ConfigGen, MazeGenerator; print('API import OK')
 
 ### B.2.3. Quick API example
 
-Toggle to python interactive shell:
+Toggle to Python interactive shell:
 ```bash
 python
 ```
@@ -671,7 +669,7 @@ understand algorithms, data structures, and design decisions.
 
 - Python Official Documentation — *set*  
   https://docs.python.org/3/library/stdtypes.html#set  
-  Eefficiently track visited coordinates.
+  Efficiently track visited coordinates.
 
 - Python Official Documentation — *random*  
   https://docs.python.org/3/library/random.html  
@@ -679,11 +677,11 @@ understand algorithms, data structures, and design decisions.
 
 - Python Official Documentation — *Stacks and Queues*  
   https://realpython.com/queue-in-python/  
-  Understand process of abstract data structures.
+  Understand the process of abstract data structures.
 
 - W3 Schools — *Queues with Python*  
   https://realpython.com/queue-in-python/  
-  Understand process of abstract data structures.
+  Understand the process of abstract data structures.
 
 - Medium article — *Stack and Queue Implementations*  
   https://medium.com/codex/understanding-stack-and-queue-implementations-in-python-a-theoretical-approach-e345e9c1362d  
@@ -691,11 +689,11 @@ understand algorithms, data structures, and design decisions.
 
 - Datacamp — *Recursion in Python*  
   https://www.datacamp.com/tutorial/recursion-in-python  
-  Understand general concept of recursion in Python and the limitations.
+  Understand the general concept of recursion in Python and the limitations.
 
 - Real Python — *Recursion in Python*  
   https://realpython.com/python-recursion/  
-  Understand general concept of recursion in Python and the limitations.
+  Understand the general concept of recursion in Python and the limitations.
 
 ---
 
