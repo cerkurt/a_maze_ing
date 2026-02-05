@@ -49,7 +49,7 @@ except Exception:
     forty_two_marking = None
 
 
-@dataclass(slots=True)
+@dataclass
 class ConfigGen:
     """Configuration container for :class:`MazeGenerator`.
 
@@ -143,21 +143,23 @@ class MazeGenerator:
                 "Maze path is not solved yet. Call solve_maze_path() first "
                 "to get the path solution.")
 
-    @property
     def generate(self) -> Maze:
         """Generate the maze and store it internally.
 
         Generation flow:
             1) Create a fresh maze with all walls closed.
             2) Optionally compute forbidden cells for the "42" decoration.
-            3) Run DFS generator, which carves passages while avoiding forbidden cells.
-            4) If perfect=False, open extra walls to create loops/multiple routes.
+            3) Run DFS generator, which carves passages while avoiding
+            forbidden cells.
+            4) If perfect=False, open extra walls to create loops/multiple
+            routes.
 
         Returns:
             The generated Maze instance.
 
         Raises:
-            RuntimeError: If perfect=False but `multiple_path_maze` is unavailable.
+            RuntimeError: If perfect=False but `multiple_path_maze` is
+            unavailable.
         """
         cfg = self.cfg
 
@@ -173,7 +175,7 @@ class MazeGenerator:
             self._forbidden = set(forty_two_marking(self._maze))
 
         # DFS generation mutates maze.grid in-place.
-        dfs_maze_generator(self._maze, self._forbidden, cfg.seed)
+        dfs_maze_generator(self._maze, cfg.seed, self._forbidden)
         if not cfg.perfect:
             if multiple_path_maze is None:
                 raise RuntimeError(
@@ -192,7 +194,7 @@ class MazeGenerator:
         Returns:
             The path as a list of coordinates from entry to exit (inclusive).
         """
-        self._path = bfs_shortest_path_solver(self.maze)
+        self._path = bfs_shortest_path_solver(self.maze, self._forbidden)
         return list(self._path)
 
     def coords_to_directions(
@@ -210,7 +212,8 @@ class MazeGenerator:
             coords: Optional coordinate iterable. If omitted, uses `self.path`.
 
         Returns:
-            Direction string such as "NNEESW". For paths shorter than 2, returns "".
+            Direction string such as "NNEESW". For paths shorter than 2,
+            returns "".
 
         Raises:
             ValueError: If the path contains a non-adjacent step.
@@ -242,3 +245,7 @@ class MazeGenerator:
                 raise ValueError(f"Non-adjacent step in path for coordinates: "
                                  f"{(x1, y1)} and {(x2,  y2)}")
         return "".join(out)
+
+    def coords_to_path(self, coords: list[tuple[int, int]]) -> str:
+        """Alias for coords_to_directions (returns a "NESW..." string)."""
+        return self.coords_to_directions(coords)
