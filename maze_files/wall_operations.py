@@ -1,7 +1,9 @@
 """
 Wall operations for the maze.
-This file contains helpers to open/close walls and to carve passages
-Between adjacent cells while keeping the maze consistent.
+
+This module contains helper functions to open and close walls using bitmask
+operations, as well as a utility to carve a passage between two adjacent cells
+while keeping wall coherence intact.
 """
 
 from enum import Enum

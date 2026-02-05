@@ -6,6 +6,7 @@ BFS. The maze is treated as an unweighted graph where each cell is a node.
 
 from __future__ import annotations
 from enum import Enum
+from typing import Optional
 from . import direction_definitions as dirdef
 from . import wall_operations as wo
 from .maze_definitions import Maze
@@ -43,16 +44,16 @@ def bfs_shortest_path_solver(maze: Maze,
     x, y = maze.entry
 
     # Set to keep track of visited coordinates to avoid revisiting
-    visited_coords = set()
+    visited_coords: set[tuple[int, int]] = {maze.entry}
     visited_coords.add(maze.entry)
 
     # Queue for BFS traversal, stores coordinates to visit next
-    coords_to_visit = deque()
+    coords_to_visit: deque[tuple[int, int]] = deque()
     coords_to_visit.append(maze.entry)
 
     # Dictionary mapping each cell to its parent cell in the BFS tree
     # (child -> parent)
-    path_family_tree = {}
+    path_family_tree: dict[tuple[int, int], Optional[tuple[int, int]]] = {}
     path_family_tree[maze.entry] = None
 
     while len(coords_to_visit) != 0:
@@ -93,8 +94,8 @@ def bfs_shortest_path_solver(maze: Maze,
 
     # Reconstruct path by following parent links from exit back to entry
     else:
-        last_spot = maze.exit
-        backtrace = []
+        last_spot: Optional[tuple[int, int]] = maze.exit
+        backtrace: list[tuple[int, int]] = []
         while last_spot is not None:
             backtrace.append(last_spot)
             last_spot = path_family_tree[last_spot]

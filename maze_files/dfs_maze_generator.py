@@ -10,6 +10,7 @@ Output: the maze grid is modified in-place by carving walls.
 
 from __future__ import annotations
 from enum import Enum
+from typing import List, Set, Tuple
 from . import wall_operations as wo
 from . import direction_definitions as dirdef
 from .maze_definitions import Maze
@@ -29,7 +30,11 @@ class C(str, Enum):
         return self.value
 
 
-def dfs_maze_generator(maze: Maze, seed, forbidden_cells: set):
+def dfs_maze_generator(
+    maze: Maze,
+    seed: int,
+    forbidden_cells: Set[Tuple[int, int]],
+) -> None:
     """
     Generate a perfect maze using an iterative DFS approach with a stack.
 
@@ -45,9 +50,9 @@ def dfs_maze_generator(maze: Maze, seed, forbidden_cells: set):
     # Seed the random number generator for reproducible maze generation
     random.seed(seed)
     # Track visited coordinates to avoid revisiting cells
-    visited_coords = []
+    visited_coords: List[Tuple[int, int]] = []
     # Stack to hold the path of cells currently being explored (DFS stack)
-    dfs_tracing_stack = []
+    dfs_tracing_stack: List[Tuple[int, int]] = []
 
     start_cell = maze.entry
     x, y = start_cell
@@ -58,7 +63,7 @@ def dfs_maze_generator(maze: Maze, seed, forbidden_cells: set):
     while len(dfs_tracing_stack) != 0:
         top_element = dfs_tracing_stack[-1]
         x, y = top_element
-        unvisited_neighbors = []
+        unvisited_neighbors: List[Tuple[int, int]] = []
         # Gather unvisited neighbors within maze bounds
 
         for direction in dirdef.DIRECTIONS:
@@ -66,7 +71,7 @@ def dfs_maze_generator(maze: Maze, seed, forbidden_cells: set):
             nx = x + dx
             ny = y + dy
             if 0 <= nx < maze.width and 0 <= ny < maze.height:
-                neighbor = (nx, ny)
+                neighbor: Tuple[int, int] = (nx, ny)
                 if (neighbor not in visited_coords and
                         neighbor not in forbidden_cells):
                     unvisited_neighbors.append(neighbor)

@@ -12,6 +12,7 @@ and contains only static direction-related utilities.
 """
 
 from enum import Enum
+from typing import Final
 
 
 class C(str, Enum):
@@ -31,10 +32,10 @@ class C(str, Enum):
 # case, the dictionaries below are not variables THEY ARE CONSTANTS.
 
 # Canonical order of directions used throughout the project.
-DIRECTIONS: tuple[str, ...] = ("N", "E", "S", "W")
+DIRECTIONS: Final[tuple[str, ...]] = ("N", "E", "S", "W")
 
 # Bitmask values representing walls in each direction.
-DIR_BIT_VALUE: dict[str, int] = {
+DIR_BIT_VALUE: Final[dict[str, int]] = {
     "N": 1,
     "E": 2,
     "S": 4,
@@ -42,7 +43,7 @@ DIR_BIT_VALUE: dict[str, int] = {
 }
 
 # Mapping each direction to its opposite wall direction.
-DIR_OPPOSITE: dict[str, str] = {
+DIR_OPPOSITE: Final[dict[str, str]] = {
     "N": "S",
     "E": "W",
     "S": "N",
@@ -51,7 +52,7 @@ DIR_OPPOSITE: dict[str, str] = {
 
 # Movement deltas for grid navigation: x increases to the right, y increases
 # downward.
-DIR_MOVE_DELTA: dict[str, tuple[int, int]] = {
+DIR_MOVE_DELTA: Final[dict[str, tuple[int, int]]] = {
     "N": (0, -1),
     "E": (+1, 0),
     "S": (0, +1),

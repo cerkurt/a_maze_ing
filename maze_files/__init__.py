@@ -1,10 +1,19 @@
-# function names here to import as pack
-# list of visited cells to use later as check list.
-# spanning tree
+"""
+maze_files package public interface.
 
-# wall_def_opr/__init__.py
+This file defines the public API of the maze_files package by re-exporting
+the most commonly used classes, constants, and helper functions from the
+internal modules.
 
-# Re-export direction utilities
+The goal is to allow users to import everything they need from a single place
+(e.g. `from maze_files import Maze, DIRECTIONS, carve_coordinate`) without
+having to know the internal file structure.
+
+Only symbols listed in __all__ are considered part of the stable public API.
+"""
+
+# Direction constants and helpers: describe movement, walls, and direction
+# logic.
 from .direction_definitions import (
     DIRECTIONS,
     DIR_BIT_VALUE,
@@ -16,11 +25,12 @@ from .direction_definitions import (
 )
 
 
-# Re-export maze
+# Core maze data structure.
 from .maze_definitions import Maze
 
 
-# Re-export wall operations
+# Wall operations: low-level helpers for opening/closing walls and checking
+# wall state.
 from .wall_operations import (
     carve_coordinate,
     add_a_wall,
@@ -28,7 +38,7 @@ from .wall_operations import (
     is_it_solid_wall
 )
 
-
+# Explicitly define the public API surface of the package.
 __all__ = [
     # direction_definitions
     "DIRECTIONS",

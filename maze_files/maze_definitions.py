@@ -5,6 +5,7 @@ operations and pathfinding logic.
 """
 
 from enum import Enum
+from typing import List
 
 
 class C(str, Enum):
@@ -60,9 +61,9 @@ class Maze:
         # Initialize the grid as a list of rows, each row is a list of cells.
         # Each cell is initialized to 15, representing all walls present
         # (bitmask 1111).
-        self.grid = []
+        self.grid: List[List[int]] = []
         for _ in range(self.height):
-            row = [15] * self.width
+            row: List[int] = [15] * self.width
             self.grid.append(row)
 
     def is_in_bounds(self, coord: tuple[int, int]) -> bool:

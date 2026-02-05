@@ -8,10 +8,14 @@ while keeping the maze connected.
 
 from __future__ import annotations
 from enum import Enum
+from typing import List, Set, Tuple
 from . import wall_operations as wo
 from . import direction_definitions as dirdef
 from .maze_definitions import Maze
 import random
+
+Coord = Tuple[int, int]
+Candidate = Tuple[Coord, Coord, str]
 
 
 class C(str, Enum):
@@ -27,7 +31,7 @@ class C(str, Enum):
         return self.value
 
 
-def check_neighbor_pair(maze, coord1: tuple, direction: str) -> bool:
+def check_neighbor_pair(maze: Maze, coord1: Coord, direction: str) -> bool:
     """
     Check if the wall in the given direction from coord1 is closed.
 
@@ -51,7 +55,7 @@ def check_neighbor_pair(maze, coord1: tuple, direction: str) -> bool:
         return False
 
 
-def multiple_path_maze(maze: Maze, forbidden_cells: set):
+def multiple_path_maze(maze: Maze, forbidden_cells: Set[Coord]) -> None:
     """
     Modify a perfect maze to create an imperfect maze by opening extra walls.
 
@@ -64,13 +68,14 @@ def multiple_path_maze(maze: Maze, forbidden_cells: set):
 
     Args:
         maze: Maze object to be modified.
+        forbidden_cells: Coordinates that must not be opened/connected.
     """
     # Number of extra walls to open, scaling with maze size
     extra_paths = max(1, (maze.width * maze.height) // 25)
 
     # List of candidate cells to open walls between:
     # ((x, y), (nx, ny), direction)
-    candidate_cells = []
+    candidate_cells: List[Candidate] = []
 
     # Scan every cell in the maze
     for y in range(maze.height):
@@ -94,7 +99,7 @@ def multiple_path_maze(maze: Maze, forbidden_cells: set):
     extra_paths = min(extra_paths, len(candidate_cells))
 
     # Open walls randomly from candidates to create multiple paths
-    for paths in range(extra_paths):
+    for _ in range(extra_paths):
         # Pick a random candidate index
         random_pick = random.randint(0, len(candidate_cells) - 1)
         carving_pair = candidate_cells[random_pick]
